@@ -8,18 +8,15 @@ app.use(cors());//to allow cross origin resource sharing
 // //import routes
 const userRouter = require('./routers/userRouters');
 const productRouter = require('./routers/productRouters');
+const contactRouter = require('./routers/contactRouters');
 
-// const questionRouter = require('./routers/questionRouter');
-// const userRouter = require('./routers/userRouter');
-// const sessionRouter = require('./routers/sessionRouter');
 
 
 // //api routes
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/product', productRouter);
-// app.use('/api/v1/question', questionRouter);
-// app.use('/api/v1/user', userRouter);
-// app.use('/api/v1/session', sessionRouter);
+app.use('/api/v1/contact', contactRouter);
+
 
 
 //import db funtion
