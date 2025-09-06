@@ -9,6 +9,8 @@ app.use(cors());//to allow cross origin resource sharing
 const userRouter = require('./routers/userRouters');
 const productRouter = require('./routers/productRouters');
 const contactRouter = require('./routers/contactRouters');
+const transactionRouter = require('./routers/transactionRouters');
+const reportRouter = require('./routers/reportRouters');
 
 
 
@@ -16,6 +18,8 @@ const contactRouter = require('./routers/contactRouters');
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/product', productRouter);
 app.use('/api/v1/contact', contactRouter);
+app.use('/api/v1/transaction', transactionRouter);
+app.use('/api/v1/report', reportRouter);
 
 
 

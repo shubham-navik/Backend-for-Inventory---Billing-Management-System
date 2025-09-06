@@ -64,6 +64,12 @@ exports.loginUser = async (req, res) => {
             JWT_SECRET,
             { expiresIn: "24h" }
         );
+        // // Save JWT token from login response into environment variable
+        // const res = pm.response.json();
+        // if (res.token) {
+        //     pm.environment.set("token", res.token);
+        // }
+
         res.status(200).json({ token, message: "Login successful" });
 
         

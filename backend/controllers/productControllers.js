@@ -107,3 +107,33 @@ exports.deleteProducts = async (req, res) => {
         })
     }
 }
+
+//search products by name or category
+// GET /products?name=...&category=...
+exports.searchProducts = async (req, res) => {
+    try {
+        const businessId = req.user.businessId; // only fetch logged-in user’s products
+        const { name, category } = req.query;
+
+        let filter = { businessId };
+
+        if (name) {
+            filter.name = { $regex: name, $options: "i" }; // case-insensitive search
+        }
+
+        if (category) {
+            filter.category = { $regex: category, $options: "i" };
+        }
+
+        const products = await Product.find(filter);
+
+        res.status(200).json({
+            message: "Searched products fetched successfully",
+            count: products.length,
+            products
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Error seraching products", error: error.message });
+    }
+};

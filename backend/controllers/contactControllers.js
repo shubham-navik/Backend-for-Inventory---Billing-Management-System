@@ -99,3 +99,35 @@ exports.deleteContact = async (req, res) => {
         })
     }
 } 
+
+// search contacts by name/email/phone (individually or combined)
+exports.searchContacts = async (req, res) => {
+  try {
+    const { name, email, phone } = req.query;
+    const businessId = req.user.businessId;
+
+    if (!name && !email && !phone) {
+      return res.status(400).json({ message: "At least one search parameter is required" });
+    }
+
+    let conditions = [];
+    if (name) conditions.push({ name: { $regex: name, $options: "i" } });
+    if (email) conditions.push({ email: { $regex: email, $options: "i" } });
+    if (phone) conditions.push({ phone: { $regex: phone, $options: "i" } });
+
+    const contacts = await Contact.find({
+      businessId,
+      $or: conditions
+    });
+
+    res.status(200).json({
+      message: "Contacts fetched successfully",
+      contacts
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error in searching contacts",
+      error
+    });
+  }
+};
